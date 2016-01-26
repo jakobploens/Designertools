@@ -1,0 +1,52 @@
+/**
+ * Tooltip.js is a lightweight javascript plugin for responsive and
+ * easy to use tooltips.
+ *
+ * Demo stylesheet, not needed for production
+ *
+ * @version   1.0
+ * @author    Jakob Ploens <jakob@2helden.com>
+ * @copyright Jakob Ploens 2016
+ * @license   The MIT License
+ */
+
+* {
+    margin:     0;
+    padding:    0;
+    box-sizing: border-box;
+    position:   relative;
+}
+
+html {
+    background: #efefef;
+}
+
+body {
+    color: #111;
+    font-size: 1em;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.8;
+
+    padding: 3em;
+    max-width: 60rem;
+}
+
+p {
+    margin-top: 1.8rem;
+    margin-bottom: 1.8rem;
+}
+
+h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 1.8rem;
+}
+
+.trigger {
+    /*display:       inline-block;*/
+    /*padding:       0 .5em;*/
+    /*background:    #fff;*/
+    /*border-radius: 2px;*/
+    border-bottom: 2px solid olive;
+    color: olive;
+}
