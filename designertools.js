@@ -58,45 +58,44 @@ var Designertools = function(settings){
     this.selector = document.querySelector(this.defaults.selector);
 
     /**
+     * Base tool. Everything which happens here will be called by the other elements.
+     *
+     * @param string Label
+     * @param string Key to be changed
+     * @param boolean If set to true, will not attach event handler. Defaults to false.
+     */
+    this.basefield = function(label, key, customBinding){
+        this.element = document.createElement('div');
+        this.key     = key;
+        this.value   = getStyle(self.selector, key);
+
+        this.title = document.createElement('b');
+        this.title.style.display = 'block';
+        this.title.innerHTML = label;
+        this.element.appendChild(this.title);
+
+        this.input = document.createElement('div');
+        this.input.style.display = 'inline-block';
+        this.input.setAttribute('contenteditable', 'true');
+        this.input.textContent = this.value;
+
+        /**
+         * Create event listener for input
+         */
+        if(!customBinding){
+            this.input.addEventListener('input', function(){
+                var value = this.textContent;
+                self.selector.style[key] = value;
+            }, false);
+        }
+
+        this.element.appendChild(this.input);
+    };
+
+    /**
      * Default toolset.
      */
     this.toolset = {
-
-        /**
-         * Base tool. Everything which happens here will be called by the other elements.
-         *
-         * @param string Label
-         * @param string Key to be changed
-         * @param boolean If set to true, will not attach event handler. Defaults to false.
-         */
-        base: function(label, key, customBinding){
-            this.element = document.createElement('div');
-            this.key     = key;
-            this.value   = getStyle(self.selector, key);
-
-            this.title = document.createElement('b');
-            this.title.style.display = 'block';
-            this.title.innerHTML = label;
-            this.element.appendChild(this.title);
-
-            this.input = document.createElement('div');
-            this.input.style.display = 'inline-block';
-            this.input.setAttribute('contenteditable', 'true');
-            this.input.textContent = this.value;
-
-            /**
-             * Create event listener for input
-             */
-            if(!customBinding){
-                this.input.addEventListener('input', function(){
-                    var value = this.textContent;
-                    self.selector.style[key] = value;
-                }, false);
-            }
-
-            this.element.appendChild(this.input);
-        },
-
         /**
          * size
          * Used for all sizes.
@@ -109,7 +108,7 @@ var Designertools = function(settings){
                 step: 0.1,
             };
 
-            var element = new self.toolset.base(settings.label, settings.key, true);
+            var element = new self.basefield(settings.label, settings.key, true);
             element.options = merge(defaults, settings);
 
             if(element.options.unit !== 'px'){
@@ -161,7 +160,7 @@ var Designertools = function(settings){
             return element;
         },
         color: function(settings){
-            var element = new self.toolset.base(settings.label, settings.key);
+            var element = new self.basefield(settings.label, settings.key);
             return element;
         }
     };
