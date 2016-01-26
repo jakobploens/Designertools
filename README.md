@@ -71,6 +71,88 @@ fontSize: {
 
 `label` describes the label above the field. Required!
 
-`options` holds separate options for the tool, if available and necessary. Take a look at the certain field which options are available. Optional.
+`options` holds separate options for the tool, if available and necessary. Take a look at the certain tool which options are available. Optional.
 
 For example, the `size` field can have a unit, minimum and maximum values as option.
+
+
+### Available tools
+
+By default, the following tools (called with `type: 'toolname'`, see avobe) are available. All tools come with the label and a contenteditable div input.
+
+`size`
+Default options:
+```
+unit: 'em'
+min:  0.5
+max:  5
+step: 0.1
+```
+
+The size field has additionally a range input slider below the input. Therefore the min/max/step values are used.
+
+`color`
+*No options available.*
+
+The color field comes with a color picker.
+
+### Extend toolset
+
+If you want to extend the toolset, have a look at the base definitions of `size` and `color`. The toolset has to follow this syntax:
+
+```javascript
+var toolset = {
+
+    // Your field name which will be called later
+    field: function(settings){
+        // Default values. Optional (if not neccessary, remove also the merging part right after extending the base field)
+        var defaults = {
+            unit: 'em',
+            min:  0.5,
+            max:  5,
+            step: 0.1,
+        };
+
+        // This line is required – make sure to always extend the base field!
+        var field = new Designertools.basefield(settings.label, settings.key, true);
+        field.options = merge(defaults, settings);
+
+        // Return field.
+        return field;
+    }
+};
+```
+
+If you want to add more elements, do this after extending the base field. Elements should be appending like this:
+
+```javascript
+var field = new Designertools.basefield(settings.label, settings.key, true);
+
+// Create element
+var range = document.createElement('input');
+
+// Add styles and attributes
+field.range.style.width = '100%';
+field.range.setAttribute('type', 'range');
+
+// Set value – value is readout by the basefield
+field.range.value = element.value;
+
+// Append to element
+field.element.appendChild(field.range);
+
+return field;
+```
+
+Your toolset can be used by passing the object through the settings:
+
+```javascript
+var myToolset = {
+    field: function(settings){
+        // your field
+    }
+};
+new Designertools({
+    toolset: myToolset
+});
+```
