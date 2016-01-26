@@ -53,3 +53,24 @@ new Designertools({
     }
 });
 ```
+
+Let's have a deeper look at the single elements.
+
+```javascript
+fontSize: {
+    type: 'size',
+    label: 'Change font size',
+    options: {
+    }
+},
+```
+
+`fontSize` describes the attribute which will be styled. Styling is applied by `element.style.fontSize = value;`, so be careful here. (For those unfamiliar with this: basically, it's camelcase instead dividing the css attribute by hyphen, `backgroundColor` instead of `background-color` etc.).
+
+`type` defines the type of the field/tool. Have a look at the detailed view on this topic further down. Required!
+
+`label` describes the label above the field. Required!
+
+`options` holds separate options for the tool, if available and necessary. Take a look at the certain field which options are available. Optional.
+
+For example, the `size` field can have a unit, minimum and maximum values as option.
